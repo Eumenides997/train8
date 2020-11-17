@@ -21,7 +21,25 @@ module.exports = function (env, argv) {
         },
         module: {
             rules: [
-                { test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' }
+                {
+                    test: /\.js$/, 
+                    use: 'babel-loader',
+                },
+                {
+                    test: /\.(woff|woff2|eot|ttf|otf)$/,
+                    use: ["file-loader"]
+                },
+                {
+                    test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
+                    loader: "url-loader",
+                    options: {
+                        limit: 10000
+                    }
+                },
+                {
+                    test: /\.css$/,
+                    use: ['style-loader', 'css-loader']
+                }
             ]
         }
     }

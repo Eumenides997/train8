@@ -1,3 +1,5 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { Nav } from 'react-bootstrap'
 import Battle from '../pages/Battle'
 import Popular from '../pages/Popular'
@@ -6,7 +8,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            route: 'Battle'
+            route: 'Popular'
         }
     }
     handleMenu(key) {
@@ -35,6 +37,6 @@ export default class App extends React.Component {
         return (
             <div><Nav variant="pills" onSelect={(selectedKey) => this.handleMenu(selectedKey)}>
                 {menuItems.map((item, key) => <Nav.Item key={key}><Nav.Link eventKey={item}>{item}</Nav.Link></Nav.Item>)}
-            </Nav><h1>app.js</h1>{page}</div>)
+            </Nav>{page}</div>)
     }
 }

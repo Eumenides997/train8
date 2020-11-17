@@ -1,9 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
-import 'lazysizes';
-import * as ReactBootstrap from 'react-bootstrap';
-
+import React from 'react'
+import ReactDOM from 'react-dom'
+import axios from 'axios'
+import 'lazysizes'
+import * as ReactBootstrap from 'react-bootstrap'
+import '../../node_modules/bootstrap/dist/css/bootstrap.css'
+import '../../node_modules/font-awesome/css/font-awesome.css'
 
 var Spinner = ReactBootstrap.Spinner
 var Alert = ReactBootstrap.Alert
