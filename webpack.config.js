@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const { node } = require('webpack');
 module.exports = function (env, argv) {
     const isEnvDevelopmentt = argv.mode === 'development' || !argv.mode;
     const isEnvProduction = argv.mode === 'production';
@@ -17,12 +18,13 @@ module.exports = function (env, argv) {
             })
         ],
         devServer: {
-            contentBase: './dist'
+            contentBase: './dist',
+            hot: true
         },
         module: {
             rules: [
                 {
-                    test: /\.js$/, 
+                    test: /\.js$/,
                     use: 'babel-loader',
                 },
                 {
@@ -38,7 +40,23 @@ module.exports = function (env, argv) {
                 },
                 {
                     test: /\.css$/,
+                    include: [path.resolve(__dirname, './src/styles'), /node_modules/],
                     use: ['style-loader', 'css-loader']
+                },
+                {
+                    test: /\.css$/,
+                    exclude: [path.resolve(__dirname, './src/styles'), /node_modules/],
+                    use: ['style-loader', 'css-loader?modules']
+                },
+                {
+                    test: /\.less$/,
+                    include: [path.resolve(__dirname, './src/styles'), /node_modules/],
+                    use: ['style-loader', 'css-loader', 'less-loader']
+                },
+                {
+                    test: /\.less$/,
+                    exclude: [path.resolve(__dirname, './src/styles'), /node_modules/],
+                    use: ['style-loader', 'css-loader?modules', 'less-loader']
                 }
             ]
         }

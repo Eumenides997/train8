@@ -2,7 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose, faSpinner, faPeopleArrows, faBalanceScale, faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row } from 'react-bootstrap'
-import '../styles/battle.css'
+import '../styles/index.less'
 
 class BattleAgo extends React.Component {
     render() {

@@ -2,8 +2,9 @@ import React from 'react'
 import { Nav } from 'react-bootstrap'
 import Battle from '../pages/Battle'
 import Popular from '../pages/Popular'
+import {hot} from 'react-hot-loader/root'
 
-export default class App extends React.Component {
+class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -39,3 +40,4 @@ export default class App extends React.Component {
             </Nav>{page}</div>)
     }
 }
+export default hot(App)

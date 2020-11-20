@@ -159,7 +159,6 @@ class App extends React.Component {
                 <Header onClick={this.handleNavClick} activeKey={lang}>
                 </Header>
                 <Content>
-
                     <Row className="justify-content-around">
                         {cards.map((item, key) => <Col sm={6} md={4} lg={3} key={key}>
                             <RepoCard no={item.no}
