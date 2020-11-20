@@ -13,7 +13,7 @@ module.exports = function (env, argv) {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                template: "./index.html"
+                template: "./public/index.html"
             })
         ],
         devServer: {

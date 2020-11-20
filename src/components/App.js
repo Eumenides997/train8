@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { Nav } from 'react-bootstrap'
 import Battle from '../pages/Battle'
 import Popular from '../pages/Popular'
@@ -8,7 +7,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            route: 'Popular'
+            route: 'Battle'
         }
     }
     handleMenu(key) {

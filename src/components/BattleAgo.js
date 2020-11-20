@@ -1,35 +1,46 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose, faSpinner, faPeopleArrows, faBalanceScale, faTrophy } from '@fortawesome/free-solid-svg-icons';
+import { Col, Row } from 'react-bootstrap'
 
 class BattleAgo extends React.Component {
     render() {
         return (
             <main>
+
                 <div className="instrutions">
                     <h2>Instrutions</h2>
-                    <ul>
-                        <li>
+                    <Row>
+                        <Col>
                             <h5>Enter Two Users</h5>
                             <div><FontAwesomeIcon className='a' style={{ color: "#e06c75" }} icon={faPeopleArrows} /></div>
-                        </li>
-                        <li>
+                        </Col>
+                        <Col>
                             <h5>Battle</h5>
                             <div><FontAwesomeIcon className="a" style={{ color: "#ec981d" }} icon={faBalanceScale} /></div>
-                        </li>
-                        <li>
+                        </Col>
+                        <Col>
                             <h5>See The Winner</h5>
                             <div><FontAwesomeIcon className="a" style={{ color: "#e06c75" }} icon={faTrophy} /></div>
-                        </li>
-                    </ul>
-                    <h2>Players</h2>
+                        </Col>
+                    </Row>
                 </div>
                 <div className="players">
-                    <div className="player1">
-                        <input type="text" placeholder="Github UserName"></input>
-                    </div>
-                    <div className="player2"></div>
+                    <h2>Players</h2>
+                    <Row>
+                        <Col>
+                            <div className="player1">
+                                <input type="text" placeholder="Github UserName"></input>
+                                <input type="button" value="Submit"></input>
+                            </div>
+                        </Col>
+                        <Col>
+                            <div className="player2">
+                                <input type="text" placeholder="Github UserName"></input>
+                                <input type="button" value="Submit"></input>
+                            </div>
+                        </Col>
+                    </Row>
                 </div>
             </main>
         )

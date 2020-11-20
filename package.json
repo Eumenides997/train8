@@ -1,10 +1,11 @@
 {
   "name": "train8",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode development",
+    "dev": "webpack-dev-server --open --mode development"
   },
   "author": "",
   "license": "ISC",
@@ -44,5 +45,14 @@
     "webpack": "^4.29.0",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eumenides997/train8.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Eumenides997/train8/issues"
+  },
+  "homepage": "https://github.com/Eumenides997/train8#readme",
+  "description": ""
 }
