@@ -2,26 +2,26 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose, faSpinner, faPeopleArrows, faBalanceScale, faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row } from 'react-bootstrap'
+import '../styles/battle.css'
 
 class BattleAgo extends React.Component {
     render() {
         return (
-            <main>
-
+            <div className="container">
                 <div className="instrutions">
                     <h2>Instrutions</h2>
                     <Row>
                         <Col>
                             <h5>Enter Two Users</h5>
-                            <div><FontAwesomeIcon className='a' style={{ color: "#e06c75" }} icon={faPeopleArrows} /></div>
+                            <FontAwesomeIcon className='icon' style={{ color: "#e06c75" }} icon={faPeopleArrows} />
                         </Col>
                         <Col>
                             <h5>Battle</h5>
-                            <div><FontAwesomeIcon className="a" style={{ color: "#ec981d" }} icon={faBalanceScale} /></div>
+                            <FontAwesomeIcon className="icon" style={{ color: "#ec981d" }} icon={faBalanceScale} />
                         </Col>
                         <Col>
                             <h5>See The Winner</h5>
-                            <div><FontAwesomeIcon className="a" style={{ color: "#e06c75" }} icon={faTrophy} /></div>
+                            <div><FontAwesomeIcon className="icon" style={{ color: "#e06c75" }} icon={faTrophy} /></div>
                         </Col>
                     </Row>
                 </div>
@@ -42,7 +42,7 @@ class BattleAgo extends React.Component {
                         </Col>
                     </Row>
                 </div>
-            </main>
+            </div>
         )
     }
 }
