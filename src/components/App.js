@@ -1,7 +1,7 @@
 import React from 'react'
 import { Nav } from 'react-bootstrap'
-import Battle from '../pages/Battle'
-import Popular from '../pages/Popular'
+import Battle from '@/pages/Battle'
+import Popular from '@/pages/Popular'
 import {hot} from 'react-hot-loader/root'
 
 class App extends React.Component {
