@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "90112103f14bc8dae620";
+/******/ 	var hotCurrentHash = "de4a9f8eedce56f4a7db";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -10482,7 +10482,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default.a);
 // Module
-___CSS_LOADER_EXPORT___.push([module.i, "* {\n  margin: 0;\n  padding: 0;\n}\n.a {\n  padding: 10px;\n  width: 200px!important;\n  height: 200px;\n  background-color: black;\n}\n.container {\n  width: 1200px;\n  margin: 0 auto;\n  text-align: center;\n}\n", "",{"version":3,"sources":["webpack://./src/styles/index.less"],"names":[],"mappings":"AAAA;EACI,SAAA;EACA,UAAA;AACJ;AACA;EACI,aAAA;EACA,sBAAA;EACA,aAAA;EACA,uBAAA;AACJ;AACA;EACI,aAAA;EACA,cAAA;EACA,kBAAA;AACJ","sourcesContent":["*{\n    margin: 0;\n    padding: 0;\n}\n.a{\n    padding: 10px;\n    width: 200px!important;\n    height: 200px;\n    background-color: black;\n}\n.container{\n    width: 1200px;\n    margin:0 auto;\n    text-align: center;\n}\n// .input{\n//     margin-top: 100px;\n// }"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.i, "* {\n  margin: 0;\n  padding: 0;\n}\n.a {\n  padding: 10px;\n  width: 200px!important;\n  height: 200px;\n  background-color: black;\n}\n.container {\n  width: 1200px;\n  margin: 0 auto;\n  text-align: center;\n}\n.playerCard {\n  width: 200px;\n  height: 230px;\n  margin: auto;\n}\n", "",{"version":3,"sources":["webpack://./src/styles/index.less"],"names":[],"mappings":"AAAA;EACI,SAAA;EACA,UAAA;AACJ;AACA;EACI,aAAA;EACA,sBAAA;EACA,aAAA;EACA,uBAAA;AACJ;AACA;EACI,aAAA;EACA,cAAA;EACA,kBAAA;AACJ;AACA;EACI,YAAA;EACA,aAAA;EACA,YAAA;AACJ","sourcesContent":["*{\n    margin: 0;\n    padding: 0;\n}\n.a{\n    padding: 10px;\n    width: 200px!important;\n    height: 200px;\n    background-color: black;\n}\n.container{\n    width: 1200px;\n    margin:0 auto;\n    text-align: center;\n}\n.playerCard{\n    width: 200px;\n    height: 230px;\n    margin: auto;\n}\n// .input{\n//     margin-top: 100px;\n// }"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
@@ -38386,8 +38386,30 @@ var Battle = /*#__PURE__*/function (_React$Component) {
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "fight", function (ev) {
       ev.persist();
 
+      if (_this.state.TotalCount > _this.state.total_count2) {
+        _this.setState({
+          winner: 1
+        });
+      } else if (_this.state.total_count === _this.state.total_count2) {
+        _this.setState({
+          winner: 0
+        });
+      } else {
+        _this.setState({
+          winner: 2
+        });
+      }
+
       _this.setState({
         openKey: 1
+      });
+    });
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "fightAgain", function (ev) {
+      ev.persist();
+
+      _this.setState({
+        openKey: 0
       });
     });
 
@@ -38400,7 +38422,8 @@ var Battle = /*#__PURE__*/function (_React$Component) {
       userItem2: [],
       key: 0,
       key2: 0,
-      openKey: 0
+      openKey: 0,
+      winner: null
     };
     return _this;
   }
@@ -38410,7 +38433,20 @@ var Battle = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "container"
-      }, this.state.openKey ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
+      }, this.state.openKey ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null, this.state.winner = 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
+        className: "playerCard"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("img", {
+        src: 0 ? undefined : "https://github.com/".concat(this.state.userName, ".png?size=200"),
+        alt: ""
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("span", null, this.state.userName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_10__["FontAwesomeIcon"], {
+        className: "b",
+        icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_11__["faWindowClose"],
+        onClick: this.selKey
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("h2", null, "player1 win")) : /*#__PURE__*/undefined, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("input", {
+        type: "button",
+        value: "fight again",
+        onClick: this.fightAgain
+      })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "instrutions"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("h2", null, "Instrutions"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_12__["Row"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_12__["Col"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("h5", null, "Enter Two Users"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_10__["FontAwesomeIcon"], {
         className: "a",
