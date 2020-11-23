@@ -17,7 +17,8 @@ class Battle extends React.Component {
             userItem2: [],
             key: 0,
             key2: 0,
-            openKey: 0
+            openKey: 0,
+            winner: null
         }
     }
 
@@ -89,9 +90,25 @@ class Battle extends React.Component {
 
     fight = (ev) => {
         ev.persist();
+        if (this.state.TotalCount > this.state.total_count2) {
+            this.setState({ winner: 1 })
+        } else if (this.state.total_count === this.state.total_count2) {
+            this.setState({ winner: 0 })
+        } else {
+            this.setState({ winner: 2 })
+        }
         this.setState(
             {
                 openKey: 1
+            }
+        )
+    }
+
+    fightAgain = (ev) => {
+        ev.persist();
+        this.setState(
+            {
+                openKey: 0
             }
         )
     }
@@ -101,7 +118,20 @@ class Battle extends React.Component {
             <div className="container">
                 {this.state.openKey ?
                     <div>
-                        
+                        {this.state.winner = 1 ?
+                            <div>
+                                <div className="playerCard"><img src={0 ? `${this.state.userItem.owner.avatar_url}?size=200` : `https://github.com/${this.state.userName}.png?size=200`} alt="" />
+                                    <span>{this.state.userName}</span>
+                                    <FontAwesomeIcon className="b" icon={faWindowClose} onClick={this.selKey} /></div>
+                                <h2>player1 win</h2>
+                            </div>
+                            : <div>
+                                <div className="playerCard"><img src={0 ? `${this.state.userItem2.owner.avatar_url}?size=200` : `https://github.com/${this.state.userName2}.png?size=200`} alt="" />
+                                    <span>{this.state.userName2}</span>
+                                    <FontAwesomeIcon className="b" icon={faWindowClose} onClick={this.selKey2} /></div>
+                                <h2>player2 win</h2>
+                            </div>}
+                        <input type="button" value="fight again" onClick={this.fightAgain} />
                     </div>
                     : <div>
                         <div className="instrutions">

@@ -20,6 +20,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.12",
+    "autoprefixer": "^10.0.2",
     "axios": "^0.21.0",
     "babel-standalone": "^6.26.0",
     "bootstrap": "^4.5.3",
@@ -30,14 +31,15 @@
     "less": "^3.12.2",
     "less-loader": "^7.1.0",
     "normalize.css": "^8.0.1",
+    "postcss-loader": "^4.1.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-dom": "^17.0.1",
     "react-fontawesome": "^1.7.1",
-    "style-loader": "^2.0.0",
-    "url-loader": "^4.1.1",
     "react-lazyload": "^2.6.8",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
