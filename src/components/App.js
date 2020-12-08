@@ -3,6 +3,7 @@ import { Nav } from 'react-bootstrap'
 import Battle from '@/pages/Battle'
 import Popular from '@/pages/Popular'
 import {hot} from 'react-hot-loader/root'
+import { HashRouter as Router, Route, NavLink,Redirect } from 'react-router-dom'
 
 class App extends React.Component {
     constructor(props) {

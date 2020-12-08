@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose, faSpinner, faPeopleArrows, faBalanceScale, faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { Col, Form, Row } from 'react-bootstrap'
 import '@/styles/index.less'
+import Result from '@/pages/Battle/Result'
 import axios from 'axios'
 
 class Battle extends React.Component {
@@ -17,23 +18,37 @@ class Battle extends React.Component {
             userItem2: [],
             key: 0,
             key2: 0,
+            loadKey: true,
+            loadKey2: true,
             openKey: 0,
             winner: null
         }
     }
 
     userSubmit = async () => {
+        this.setState(
+            {
+                loadKey: false
+            }
+        )
+        console.log(this.state.loadKey)
         await axios.get(`https://api.github.com/search/repositories?q=${this.state.userName}&order=desc&sort=stars`)
             .then(res => {
                 console.log(res)
+                console.log(this.state.loadKey)
+                if(this.state.loadKey){
+                    return
+                }
                 this.setState(
                     {
                         userItem: res.data.items[0],
                         TotalCount: res.data.total_count,
-                        key: 1
+                        key: 1,
+                        loadKey: true
                     }
                 )
                 console.log(this.state.TotalCount)
+                console.log(this.state.loadKey)
             })
             .catch(err => {
                 console.log(err);
@@ -41,14 +56,23 @@ class Battle extends React.Component {
     }
 
     userSubmit2 = async () => {
+        this.setState(
+            {
+                loadKey2: false
+            }
+        )
         await axios.get(`https://api.github.com/search/repositories?q=${this.state.userName2}&order=desc&sort=stars`)
             .then(res => {
                 console.log(res)
+                if(this.state.loadKey2){
+                    return
+                }
                 this.setState(
                     {
                         userItem2: res.data.items[0],
                         TotalCount2: res.data.total_count,
-                        key2: 1
+                        key2: 1,
+                        loadKey2: true
                     }
                 )
                 console.log(this.state.TotalCount2)
@@ -67,6 +91,18 @@ class Battle extends React.Component {
     selKey2 = async () => {
         await this.setState({
             key2: 0
+        })
+    }
+
+    selLoadkey = () => {
+        this.setState({
+            loadKey: true
+        })
+    }
+
+    selLoadkey2 = () => {
+        this.setState({
+            loadKey2: true
         })
     }
 
@@ -103,7 +139,7 @@ class Battle extends React.Component {
             }
         )
     }
-
+    
     fightAgain = (ev) => {
         ev.persist();
         this.setState(
@@ -117,22 +153,9 @@ class Battle extends React.Component {
         return (
             <div className="container">
                 {this.state.openKey ?
-                    <div>
-                        {this.state.winner = 1 ?
-                            <div>
-                                <div className="playerCard"><img src={0 ? `${this.state.userItem.owner.avatar_url}?size=200` : `https://github.com/${this.state.userName}.png?size=200`} alt="" />
-                                    <span>{this.state.userName}</span>
-                                    <FontAwesomeIcon className="b" icon={faWindowClose} onClick={this.selKey} /></div>
-                                <h2>player1 win</h2>
-                            </div>
-                            : <div>
-                                <div className="playerCard"><img src={0 ? `${this.state.userItem2.owner.avatar_url}?size=200` : `https://github.com/${this.state.userName2}.png?size=200`} alt="" />
-                                    <span>{this.state.userName2}</span>
-                                    <FontAwesomeIcon className="b" icon={faWindowClose} onClick={this.selKey2} /></div>
-                                <h2>player2 win</h2>
-                            </div>}
-                        <input type="button" value="fight again" onClick={this.fightAgain} />
-                    </div>
+                <div><Result userName={this.state.userName} userName2={this.state.userName2} userItem={this.state.userItem} userItem2={this.state.userItem2} />
+                <input type="button" value="fight again" onClick={this.fightAgain} /></div>
+                    
                     : <div>
                         <div className="instrutions">
                             <h2>Instrutions</h2>
@@ -156,35 +179,32 @@ class Battle extends React.Component {
                             <Row>
                                 <Col>
                                     {this.state.key ?
-                                        <div className="playerCard"><img src={0 ? `${this.state.userItem.owner.avatar_url}?size=200` : `https://github.com/${this.state.userName}.png?size=200`} alt="" />
+                                        <div className="playerCard"><img src={0 ? `${this.state.userItem.owner.avatar_url}?size=50` : `https://github.com/${this.state.userName}.png?size=50`} alt="" />
                                             <span>{this.state.userName}</span>
                                             <FontAwesomeIcon className="b" icon={faWindowClose} onClick={this.selKey} /></div>
-                                        : <div className="playerCard">{'wait for palyer1'}</div>}
+                                        : <div>{this.state.loadKey ? <div className="playerCard"><input type="text" placeholder="Github UserName" value={this.state.userName} onChange={this.userChange} />
+                                            <input type="button" value="Submit" onClick={this.userSubmit} /></div> : <div><h5 style={{ textAlign: 'center' }} className=""><FontAwesomeIcon icon={faSpinner} spin style={{ fontSize: '30px' }} />
+                                                <span className="sr-only">Loading...</span>
+                                            </h5><FontAwesomeIcon className="b" icon={faWindowClose} onClick={this.selLoadkey} /></div>}</div>}
                                 </Col>
                                 <Col>
                                     {this.state.key2 ?
-                                        <div className="playerCard"><img src={0 ? `${this.state.userItem2.owner.avatar_url}?size=200` : `https://github.com/${this.state.userName2}.png?size=200`} alt="" />
+                                        <div className="playerCard"><img src={0 ? `${this.state.userItem2.owner.avatar_url}?size=50` : `https://github.com/${this.state.userName2}.png?size=50`} alt="" />
                                             <span>{this.state.userName2}</span>
                                             <FontAwesomeIcon className="b" icon={faWindowClose} onClick={this.selKey2} /></div>
-                                        : <div className="playerCard">{'wait for palyer2'}</div>}
+                                        : <div>{this.state.loadKey2 ? <div className="playerCard"><input type="text" placeholder="Github UserName" value={this.state.userName2} onChange={this.userChange2} />
+                                            <input type="button" value="Submit" onClick={this.userSubmit2} /></div> : <div><h5 style={{ textAlign: 'center' }} className=""><FontAwesomeIcon icon={faSpinner} spin style={{ fontSize: '30px' }} />
+                                                <span className="sr-only">Loading...</span>
+                                            </h5><FontAwesomeIcon className="b" icon={faWindowClose} onClick={this.selLoadkey2} /></div>}</div>}
                                 </Col>
                             </Row>
                         </div>
                         <div className="input">
-                            {this.state.key && this.state.key2 ?
+                            {this.state.key && this.state.key2 && this.state.loadKey && this.state.loadKey2 ?
                                 <div><Row>
                                     <Col><input type="button" value="fight" onClick={this.fight} /></Col>
                                 </Row></div>
-                                : <div><Row>
-                                    <Col>
-                                        <input type="text" placeholder="Github UserName" value={this.state.userName} onChange={this.userChange} />
-                                        <input type="button" value="Submit" onClick={this.userSubmit} />
-                                    </Col>
-                                    <Col>
-                                        <input type="text" placeholder="Github UserName" value={this.state.userName2} onChange={this.userChange2} />
-                                        <input type="button" value="Submit" onClick={this.userSubmit2} />
-                                    </Col>
-                                </Row></div>}
+                                : <div></div>}
                         </div>
                     </div>}
             </div>
