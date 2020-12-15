@@ -1,44 +1,29 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react';
 import { Nav } from 'react-bootstrap'
-import Battle from '@/pages/Battle'
 import Popular from '@/pages/Popular'
-import {hot} from 'react-hot-loader/root'
-import { HashRouter as Router, Route, NavLink,Redirect } from 'react-router-dom'
+import { hot } from 'react-hot-loader/root'
+import { HashRouter as Router, Route, NavLink, Redirect } from 'react-router-dom'
+import '@/styles/index.less'
 
+const Battle = lazy(() => import('@/pages/Battle/index'));
 class App extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            route: 'Battle'
-        }
-    }
-    handleMenu(key) {
-        console.log('key', key)
-        this.setState({
-            route: key
-        })
-    }
     render() {
-        const menuItems = [
-            "Popular",
-            "Battle"
-        ]
-        const { route } = this.state
-        let page = null
-        switch (route) {
-            case 'Battle':
-                console.log('battle')
-                page = <Battle></Battle>
-                break;
-            case 'Popular':
-                console.log('popular')
-                page = <Popular></Popular>
-                break;
-        }
         return (
-            <div><Nav variant="pills" onSelect={(selectedKey) => this.handleMenu(selectedKey)}>
-                {menuItems.map((item, key) => <Nav.Item key={key}><Nav.Link eventKey={item}>{item}</Nav.Link></Nav.Item>)}
-            </Nav>{page}</div>)
+            <Router>
+                <div>
+                    <Nav>
+                        <NavLink className="top " to="/Popular">Popular</NavLink>
+                        <NavLink className="top " to="/Battle">Battle</NavLink>
+                    </Nav>
+                    <Route path="/Popular/:src?" component={Popular} />
+                    <Suspense fallback={<div style={{ textAlign: "center" }}>Loading...</div>}>
+                        <Route path="/Battle/:user?" component={Battle} />
+                    </Suspense>
+                    <Route exact path="/">
+                        <Redirect from="/" to="/Popular" />
+                    </Route>
+                </div>
+            </Router>)
     }
 }
 export default hot(App)

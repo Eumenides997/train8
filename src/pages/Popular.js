@@ -4,6 +4,7 @@ import 'lazysizes'
 import * as ReactBootstrap from 'react-bootstrap'
 import '../../node_modules/bootstrap/dist/css/bootstrap.css'
 import '../../node_modules/font-awesome/css/font-awesome.css'
+import { HashRouter as Router, NavLink, Link as Link } from 'react-router-dom'
 
 var Spinner = ReactBootstrap.Spinner
 var Alert = ReactBootstrap.Alert
@@ -14,19 +15,13 @@ var Row = ReactBootstrap.Row
 var Col = ReactBootstrap.Col
 var Button = ReactBootstrap.Button
 
-function getQueryVariable(variable) {
-    var query = window.location.search.substring(1);
-    var vars = query.split('&');
-    for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split('=');
-        if (decodeURIComponent(pair[0]) == variable) {
-            return decodeURIComponent(pair[1]);
-        }
-    }
-    return null ;
+function getQueryVariable() {
+    var url = window.location.href
+    // console.log("src:"+url.substring(url.lastIndexOf('/') + 1, url.length))
+    return url.substring(url.lastIndexOf('/') + 1, url.length);
 }
 
-console.log('lanuage is : ' + getQueryVariable('language'))
+// console.log('lanuage is : ' + getQueryVariable())
 const Header = (props) => {
     const menuItems = [
         'All',
@@ -39,9 +34,9 @@ const Header = (props) => {
 
     return (<div>
         <Container>
-            <Nav className="justify-content-center" variant="pills" activeKey={props.activeKey || 'All' } onSelect={(selectedKey) => props.onClick(selectedKey)} >
-                {menuItems.map((item, key) => <Nav.Item key={key}><Nav.Link eventKey={item} >{item}</Nav.Link></Nav.Item>)}
-            </Nav>
+            <Router>
+                {menuItems.map((item, key) => (<NavLink className="top " to={`/Popular/${item}`} key={key}>{item}</NavLink>))}
+            </Router>
         </Container>
     </div>)
 }
@@ -62,7 +57,7 @@ const RepoCard = (props) => (<Card border="success" style={{ marginTop: '8px', m
     <Card.Header className="text-center">{props.no}</Card.Header>
     <Card.Body>
         <Card.Img src="images/image.png" data-src={props.img} className="lazyload" />
-        <Card.Title className="text-center"><Card.Link href={props.url} target="_blank">{props.title}</Card.Link></Card.Title>
+        <Card.Title className="text-center"><Card.Link style={{ color: 'blueviolet' }} href={props.url} target="_blank">{props.title}</Card.Link></Card.Title>
         <Card.Text><i className="fa fa-user fa-lg fa-fw" style={{ color: 'orange' }}></i>{props.author}</Card.Text>
         <Card.Text><i className="fa fa-star fa-lg fa-fw" style={{ color: 'yellow' }}></i>{props.stars}</Card.Text>
         <Card.Text><i className="fa fa-code-fork fa-lg fa-fw" style={{ color: 'lightblue' }}></i>{props.forks}</Card.Text>
@@ -77,11 +72,11 @@ class App extends React.Component {
         const cards = [
 
         ]
-        this.state = { cards, loading: false, error: null, type: 'all', page: 1 }
+        this.state = { cards, loading: false, error: null, type: 'all', page: 1, btn: true }
     }
     handleNavClick = async (type = 'all', page = 1, pushState = true) => {
-        const {cards} = this.state
-        console.log('type', type)
+        const { cards } = this.state
+        // console.log('type', type)
         var url = ''
         switch (type) {
             case 'Javascript':
@@ -105,12 +100,22 @@ class App extends React.Component {
             if (page === 1) {
                 beforeState.cards = []
             }
-            if (pushState) {
-                window.history.pushState('', '', `?language=${type}`)
-            }
+            // if (pushState) {
+            //     window.history.pushState('', '', `?language=${type}`)
+            // }
             this.setState(beforeState)
             const res = await axios.get(url)
-            console.log('res', res.data)
+                .then(res => {
+                    this.setState({ btn: true })
+                    return res
+                })
+                .catch(err => {
+                    // console.log(err);
+                    this.setState({ btn: false })
+                    alert("API调用失败，重新刷新试试")
+                })
+
+            // console.log('res', res.data)
             const newCards = res.data.items.map((item, key) => ({
                 no: '#' + (page === 1 ? 1 + key : cards.length + 1 + key),
                 img: item.owner.avatar_url,
@@ -138,19 +143,32 @@ class App extends React.Component {
         this.handleNavClick(type, page + 1)
     }
     handlePopState = (params) => {
-        const lang = getQueryVariable('language')   
-        this.handleNavClick(lang,this.state.page, false)     
-        console.log('lang', lang)
-        console.log('params', params)
-        
+        const lang = getQueryVariable()
+        this.handleNavClick(lang, 1, false)
+        // console.log('lang', lang)
+        // console.log('params', params)
+
+    }
+    Next = () => {
+        const { clientHeight } = document.documentElement;
+        const { scrollHeight } = document.documentElement;
+        const { scrollTop } = document.documentElement;
+        // console.log(this.state.btn)
+        if (scrollTop + clientHeight >= scrollHeight - 5 && this.state.btn) {
+            this.loadMore()
+        }
     }
     componentDidMount() {
-        const lang = getQueryVariable('language')        
+        const lang = getQueryVariable()
         this.handleNavClick(lang)
+        window.addEventListener('scroll', this.Next)
         window.addEventListener('popstate', this.handlePopState)
+
     }
-    componentWillUnmount () {
+    componentWillUnmount() {
         window.removeEventListener('popstate', this.handlePopState)
+        window.removeEventListener('scroll', this.Next)
+
     }
     render() {
         const { cards, loading, error, lang } = this.state
@@ -172,11 +190,11 @@ class App extends React.Component {
                             />
                         </Col>)}
                     </Row>
-                    <div className="text-center">
+                    {/* <div className="text-center">
                         {error && <Alert variant="danger" >{error.response.status} {error.response.statusText}</Alert>}
-                    </div>
+                    </div> */}
                     <div className="text-center">
-                        <Button onClick={this.loadMore} disabled={loading}> {loading && <Spinner
+                        <Button onClick={this.loadMore} style={{ color: 'blueviolet', 'backgroundColor': 'black', border: 'none' }} disabled={loading}> {loading && <Spinner
                             as="span"
                             animation="grow"
                             size="sm"
@@ -197,9 +215,8 @@ class App extends React.Component {
 }
 
 
-export default class Popular extends React.Component
-{
-    render(){
-        return(<App></App>)
+export default class Popular extends React.Component {
+    render() {
+        return (<App></App>)
     }
 }

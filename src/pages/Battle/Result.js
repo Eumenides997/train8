@@ -1,7 +1,8 @@
 import React from 'react'
+import RepoCard from "@/Components/RepoCard"
+import { Container, Col, Row } from 'react-bootstrap'
 
 class Result extends React.Component {
-    
     render() {
         let one = ""
         let two = ""
@@ -18,18 +19,21 @@ class Result extends React.Component {
         }
         win()
         return (
-            <div>
-                <div>
-                    <div className="playerCard2"><img src={0 ? `${this.props.userItem.owner.avatar_url}?size=200` : `https://github.com/${this.props.userName}.png?size=200`} alt="" />
-                        <span>{this.props.userName}</span></div>
-                    <h2>player1{one}</h2>
-                </div>
-                <div>
-                    <div className="playerCard2"><img src={0 ? `${this.props.userItem2.owner.avatar_url}?size=200` : `https://github.com/${this.props.userName2}.png?size=200`} alt="" />
-                        <span>{this.props.userName2}</span></div>
-                    <h2>player2{two}</h2>
-                </div>
-            </div>
+            <Container>
+                <Row>
+                    <Col>
+                        <div>
+                            <RepoCard userItem={this.props.userItem} type={one}/>
+                        </div>
+                    </Col>
+                    <Col>
+                        <div>
+                            <RepoCard userItem={this.props.userItem2} type={two} />
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
+
         )
     }
 }
