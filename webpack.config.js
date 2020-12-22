@@ -64,6 +64,12 @@ module.exports = function (env, argv) {
                     test: /\.less$/,
                     exclude: [path.resolve(__dirname, './src/styles'), /node_modules/],
                     use: ['style-loader', 'css-loader?modules', 'postcss-loader', 'less-loader']
+                },
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    enforce: "pre",
+                    use: "eslint-loader"
                 }
             ]
         }
